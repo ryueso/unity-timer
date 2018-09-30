@@ -4,8 +4,9 @@ using UnityEngine.UI;
 
 public class TimeController : MonoBehaviour
 {
-    public Image clock;
-    public AudioSource alarm;
+    [SerializeField] private Image clock;
+    [SerializeField] private AudioSource alarm;
+    [SerializeField] private AudioSource buttonSound;
 
     private Text text;
     private double restTime;
@@ -53,6 +54,7 @@ public class TimeController : MonoBehaviour
     public void StartCount()
     {
         if (restTime <= 0) { return; }
+        buttonSound.Play();
         clock.gameObject.SetActive(true);
         last = DateTime.Now;
         state = 1;
@@ -60,24 +62,28 @@ public class TimeController : MonoBehaviour
 
     public void AddMinutes()
     {
+        buttonSound.Play();
         AddTime(60);
         drawTime();
     }
 
     public void Add10Minutes()
     {
+        buttonSound.Play();
         AddTime(600);
         drawTime();
     }
 
     public void AddSecounds()
     {
+        buttonSound.Play();
         AddTime(10);
         drawTime();
     }
 
     public void Clear()
     {
+        buttonSound.Play();
         alarm.Stop();
         clock.gameObject.SetActive(false);
         state = 0;
@@ -87,6 +93,8 @@ public class TimeController : MonoBehaviour
 
     public void Pause()
     {
+        if (state != 1) { return; }
+        buttonSound.Play();
         state = 0;
     }
 
